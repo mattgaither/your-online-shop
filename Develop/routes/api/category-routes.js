@@ -3,13 +3,14 @@ const { Category , Product } = require('../../models')
 
 // The `/api/categories` endpoint
 
+
 router.get('/', (req, res) => {
   // find all categories
   Category.findAll({
     // be sure to include its associated Products
     includes: [Product],
   })
-  .then((catagories) => res.status(200).json(catagories))
+  .then((categories) => res.status(200).json(categories))
   .catch((err) => {
     console.log(err)
     res.status(500).json(err);
@@ -49,7 +50,7 @@ router.put('/:id', (req, res) => {
       id: req.params.id
     },
   })
-  .then((catagories) => res.status(200).json(catagories))
+  .then((categories) => res.status(200).json(categories))
   .catch((err) => {
     console.log(err);
     res.status(400).json(err);
