@@ -6,13 +6,45 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // get all products
 router.get('/', (req, res) => {
   // find all products
-  // be sure to include its associated Category and Tag data
+  ProductTag.findAll({
+    // be sure to include its associated Category and Tag data
+    include: [
+      Category,
+      {
+        model: Tag,
+        through: ProductTag,
+        as: "tags",
+      },
+    ],
+  })
+  .then((product) => res.json(200).json(product))
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json(err);
+  });
 });
 
 // get one product
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
-  // be sure to include its associated Category and Tag data
+  ProductTag.findOne({
+    // be sure to include its associated Category and Tag data
+    where: {
+      id: req.params.id,
+    },
+    include: [
+      Category,
+      {
+        model: Tag,
+        through: ProductTag,
+        as: "tags",
+      },
+    ],
+  })
+  .then((products) => res.json(200).json(products))
+  .catch((err) => {
+    res.status(500).json(err)
+  });
 });
 
 // create new product
@@ -75,7 +107,7 @@ router.put('/:id', (req, res) => {
       const productTagsToRemove = productTags
         .filter(({ tag_id }) => !req.body.tagIds.includes(tag_id))
         .map(({ id }) => id);
-
+      
       // run both actions
       return Promise.all([
         ProductTag.destroy({ where: { id: productTagsToRemove } }),
@@ -91,6 +123,13 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  ProductTag.destory({
+    where: {
+      id: req.params.id,
+    },
+  })
+  .then((product) => res.status(200).json(product))
+  .catch((err) => res.status(500).json(err));
 });
 
 module.exports = router;
