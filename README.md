@@ -23,7 +23,7 @@
   
   ## Video
   
-  Link is[Here!](https://drive.google.com/file/d/1rzCAUEiIh7lWuROwTlYB8Qgm2PF-Tiib/view)
+  Link is [Here!](https://drive.google.com/file/d/1rzCAUEiIh7lWuROwTlYB8Qgm2PF-Tiib/view)
 
   ## License
   The license this application is covered under is: [MIT license](https://opensource.org/licenses/MIT)
