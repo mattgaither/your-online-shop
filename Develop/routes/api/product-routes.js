@@ -6,7 +6,7 @@ const { Product, Category, Tag, ProductTag } = require('../../models');
 // get all products
 router.get('/', (req, res) => {
   // find all products
-  ProductTag.findAll({
+  Product.findAll({
     // be sure to include its associated Category and Tag data
     include: [
       Category,
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
       },
     ],
   })
-  .then((product) => res.json(200).json(product))
+  .then((product) => res.status(200).json(product))
   .catch((err) => {
     console.log(err);
     res.status(500).json(err);
@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
 // get one product
 router.get('/:id', (req, res) => {
   // find a single product by its `id`
-  ProductTag.findOne({
+  Product.findOne({
     // be sure to include its associated Category and Tag data
     where: {
       id: req.params.id,
@@ -41,7 +41,7 @@ router.get('/:id', (req, res) => {
       },
     ],
   })
-  .then((products) => res.json(200).json(products))
+  .then((products) => res.status(200).json(products))
   .catch((err) => {
     res.status(500).json(err)
   });
@@ -87,7 +87,7 @@ router.put('/:id', (req, res) => {
       id: req.params.id,
     },
   })
-    .then((product) => {
+    .then(() => {
       // find all associated tags from ProductTag
       return ProductTag.findAll({ where: { product_id: req.params.id } });
     })
@@ -123,7 +123,7 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
-  ProductTag.destory({
+  ProductTag.destroy({
     where: {
       id: req.params.id,
     },

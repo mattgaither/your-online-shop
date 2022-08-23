@@ -34,7 +34,7 @@ router.get('/:id', (req, res) => {
       as: "products",
     }],
   })
-  .then((products) => res.status(200).json(tag))
+  .then((products) => res.status(200).json(products))
   .catch((err) => {
     console.log(err);
     res.status(500).json(err);
@@ -72,8 +72,8 @@ router.delete('/:id', (req, res) => {
       id: req.params.id,
     },
   })
-  .then((tag) => res.json(200).json(tag))
-  .catch((err) => res.json(400).json(err))
+  .then((tag) => res.status(200).json(tag))
+  .catch((err) => res.status(400).json(err))
 });
 
 module.exports = router;
